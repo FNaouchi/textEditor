@@ -10,17 +10,29 @@ const styles = {
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.state.textColor = "";
-    this.state.bold = false;
-    this.state.italic = false;
-    this.state.underline = false;
+    this.state = {
+      textColor: "",
+      bold: false,
+      italic: false,
+      underline: false
+    };
   }
   render() {
     let stylings = ["bold", "italic", "underline"];
     let colors = ["yellow", "blue", "red", "black", "purple"];
 
     let stylingBoxes = stylings.map(style => {
+      if (this.state[style]) {
+        return (
+          <button
+            onClick={() => this.setState({ [style]: !this.state[style] })}
+            style={{ ...styles[style], backgroundColor: "blue" }}
+            key={style}
+          >
+            {style}
+          </button>
+        );
+      }
       return (
         <button
           onClick={() => this.setState({ [style]: !this.state[style] })}
