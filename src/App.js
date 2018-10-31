@@ -8,13 +8,25 @@ const styles = {
 };
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.state.textColor = "";
+    this.state.bold = false;
+    this.state.italic = false;
+    this.state.underline = false;
+  }
   render() {
     let stylings = ["bold", "italic", "underline"];
     let colors = ["yellow", "blue", "red", "black", "purple"];
 
     let stylingBoxes = stylings.map(style => {
       return (
-        <button style={styles[style]} key={style}>
+        <button
+          onClick={() => this.setState({ [style]: !this.state[style] })}
+          style={styles[style]}
+          key={style}
+        >
           {style}
         </button>
       );
@@ -24,10 +36,27 @@ class App extends Component {
       return (
         <button
           style={{ backgroundColor: color, height: 30, width: 30 }}
+          onClick={() => this.setState({ textColor: color })}
           key={color}
         />
       );
     });
+
+    let daStyle = () => {
+      let style = {};
+      style.color = this.state.textColor;
+      if (this.state.bold) {
+        style.fontWeight = "bold";
+      }
+      if (this.state.italic) {
+        style.fontStyle = "italic";
+      }
+      if (this.state.underline) {
+        style.textDecorationLine = "underline";
+      }
+
+      return style;
+    };
 
     return (
       <div className="App">
@@ -35,7 +64,7 @@ class App extends Component {
         {stylingBoxes}
         <br />
         <br />
-        <textarea />
+        <textarea style={daStyle()} />
         <br />
         {colorBoxes}
       </div>
